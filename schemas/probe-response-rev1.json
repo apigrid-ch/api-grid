@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://schoenpa.github.io/api-grid/schemas/probe-response-rev1.json",
+  "$id": "https://apigrid-ch.github.io/api-grid/schemas/probe-response-rev1.json",
   "title": "EndpointComplianceProbeResponse",
   "description": "200 response body for POST /v1/probe after settle. Challenge-observation fields only (not full client payment loop).",
   "type": "object",
@@ -70,7 +70,7 @@
     },
     "truncated": {
       "type": "boolean",
-      "description": "Optional. True if the probe response body was truncated (aligns CISO egress controls)."
+      "description": "Optional. True if the probe response body was truncated at the probe's size limit."
     },
     "abort_reason": {
       "type": [

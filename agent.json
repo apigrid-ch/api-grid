@@ -1,13 +1,13 @@
 {
   "name": "API Grid",
-  "catalog": "https://schoenpa.github.io/api-grid/catalog.json",
+  "catalog": "https://apigrid-ch.github.io/api-grid/catalog.json",
   "directory": true,
   "proxy": false,
-  "x402": "https://schoenpa.github.io/api-grid/.well-known/x402.json",
+  "x402": "https://apigrid-ch.github.io/api-grid/.well-known/x402.json",
   "probe": {
     "resource": "/v1/probe",
-    "schema": "https://schoenpa.github.io/api-grid/schemas/probe-response-rev1.json",
-    "seller_endpoint": "https://api-grid-probe.apigrid.workers.dev",
+    "schema": "https://apigrid-ch.github.io/api-grid/schemas/probe-response-rev1.json",
+    "seller_endpoint": "TBD",
     "live_fetch": 0
   }
 }
