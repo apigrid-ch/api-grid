@@ -2,18 +2,18 @@
   "x402Version": 2,
   "version": 2,
   "name": "API Grid",
-  "description": "HTTPS URL \u2192 402/compliance JSON after x402 settle. Option A Endpoint Compliance Probe (LIVE-READY commercial terms: 0.10 USDC Base, autonomous settle).",
-  "commercial_claim": "LIVE-READY",
-  "seller_endpoint": "https://api-grid-probe.apigrid.workers.dev",
-  "seller_endpoint_note": "CISO CLEAR (cite CEO via CGO). seller_endpoint is the Cloudflare Worker public HTTPS host. LIVE_FETCH=0 \u2014 do not claim fetch-enabled until separately gated. Discovery remains on GitHub Pages ($0). Cap-10 PARKED honor-only. No secrets in Pages.",
+  "description": "HTTPS URL \u2192 compliance JSON. Option A Endpoint Compliance Probe (NOT-LIVE: seller_endpoint TBD; do not pay. Terms when live: 0.10 USDC Base).",
+  "commercial_claim": "NOT-LIVE",
+  "seller_endpoint": "TBD",
+  "seller_endpoint_note": "seller_endpoint is TBD. Prior Worker host decommissioned. No live seller URL is claimed. LIVE_FETCH=0. Cap-10 PARKED honor-only.",
   "discovery": {
-    "well_known": "https://schoenpa.github.io/api-grid/.well-known/x402.json",
-    "schema_rev1": "https://schoenpa.github.io/api-grid/schemas/probe-response-rev1.json",
-    "pages_base": "https://schoenpa.github.io/api-grid",
-    "agent_json": "https://schoenpa.github.io/api-grid/agent.json",
-    "catalog_json": "https://schoenpa.github.io/api-grid/catalog.json",
+    "well_known": "https://apigrid-ch.github.io/api-grid/.well-known/x402.json",
+    "schema_rev1": "https://apigrid-ch.github.io/api-grid/schemas/probe-response-rev1.json",
+    "pages_base": "https://apigrid-ch.github.io/api-grid",
+    "agent_json": "https://apigrid-ch.github.io/api-grid/agent.json",
+    "catalog_json": "https://apigrid-ch.github.io/api-grid/catalog.json",
     "catalog_note": "Cap-10 catalog remains PARKED honor-only; not sold via this probe discovery.",
-    "well_known_note": "Canonical discovery URL uses .json extension (GitHub Pages serves this reliably). Extensionless /.well-known/x402 remains unsupported on Pages and returns 404."
+    "well_known_note": "Canonical discovery URL uses .json extension. Extensionless /.well-known/x402 mirrors this file byte-for-byte."
   },
   "accepted_networks": [
     {
@@ -30,18 +30,19 @@
       "resource": "/v1/probe",
       "method": "POST",
       "sku": "POST /v1/probe",
-      "description": "Endpoint Compliance Probe \u2014 HTTPS URL \u2192 402/compliance JSON after x402 settle",
+      "description": "Endpoint Compliance Probe \u2014 HTTPS URL \u2192 compliance JSON (not offered while locked)",
       "mimeType": "application/json",
-      "price_usdc": "0.10",
-      "price_atomic": "100000",
-      "maxAmountRequired": "100000",
-      "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-      "network": "eip155:8453",
-      "payTo": "0x433bc99866b67b10ed75f24367a9fd36093b8632",
-      "scheme": "exact",
+      "reference_when_live": {
+        "status": "reference when live; inactive now; do not pay",
+        "price_usdc": "0.10",
+        "price_atomic": "100000",
+        "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+        "network": "eip155:8453",
+        "payTo": "0x433bc99866b67b10ed75f24367a9fd36093b8632"
+      },
       "ttl_seconds": 300,
       "buyer_schema": {
-        "$id": "https://schoenpa.github.io/api-grid/schemas/probe-response-rev1.json",
+        "$id": "https://apigrid-ch.github.io/api-grid/schemas/probe-response-rev1.json",
         "rev": 1,
         "title": "EndpointComplianceProbeResponse"
       },
@@ -50,54 +51,22 @@
         "body": {
           "targetUrl": "https://\u2026"
         },
-        "unpaid": "402 + PAYMENT-REQUIRED (omit PAYMENT-SIGNATURE)",
-        "paid": "Retry with PAYMENT-SIGNATURE \u2192 200 schema rev1"
+        "unpaid": "While locked (LIVE_FETCH=0): HTTP 503 {\"error\":\"live_fetch_locked\",\"detail\":\"Service locked. No payment accepted.\"}, no PAYMENT-REQUIRED, no accepts. When unlocked: 402 + PAYMENT-REQUIRED (omit PAYMENT-SIGNATURE).",
+        "paid": "While locked: HTTP 503 {\"error\":\"live_fetch_locked\",\"detail\":\"Service locked. No payment accepted.\"}, no settle. Unlocked behaviour not offered; terms published when live."
       },
       "settle": {
-        "mode": "autonomous",
+        "mode": "inactive",
         "rail": "eip3009",
-        "note": "Gas-only relayer; zero HITL per buy. LIVE-READY commercial claim; seller_endpoint published; LIVE_FETCH=0."
+        "note": "Inactive. seller_endpoint TBD; no live seller URL claimed; LIVE_FETCH=0; locked calls return HTTP 503 {\"error\":\"live_fetch_locked\",\"detail\":\"Service locked. No payment accepted.\"} and never settle."
       },
-      "accepts": [
-        {
-          "scheme": "exact",
-          "network": "eip155:8453",
-          "maxAmountRequired": "100000",
-          "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-          "payTo": "0x433bc99866b67b10ed75f24367a9fd36093b8632",
-          "resource": "/v1/probe",
-          "description": "Endpoint Compliance Probe",
-          "mimeType": "application/json",
-          "extra": {
-            "assetTransferMethod": "eip3009",
-            "name": "USD Coin",
-            "version": "2"
-          }
-        }
-      ],
+      "accepts": [],
       "payment_required": {
         "x402Version": 2,
-        "accepts": [
-          {
-            "scheme": "exact",
-            "network": "eip155:8453",
-            "maxAmountRequired": "100000",
-            "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-            "payTo": "0x433bc99866b67b10ed75f24367a9fd36093b8632",
-            "resource": "/v1/probe",
-            "description": "Endpoint Compliance Probe",
-            "mimeType": "application/json",
-            "extra": {
-              "assetTransferMethod": "eip3009",
-              "name": "USD Coin",
-              "version": "2"
-            }
-          }
-        ]
+        "accepts": []
       }
     }
   ],
-  "bot_buy_card": "POST /v1/probe\nBody: {\"targetUrl\":\"https://\u2026\"}\nUnpaid \u2192 402 + PAYMENT-REQUIRED (omit PAYMENT-SIGNATURE)\nPay exact 0.10 USDC on Base to payTo 0x433bc99866b67b10ed75f24367a9fd36093b8632\nRetry with PAYMENT-SIGNATURE \u2192 200 schema rev1",
+  "bot_buy_card": "INACTIVE until seller_endpoint is set. Do not pay payTo; no service is delivered and no refunds.",
   "locks": {
     "cap10": "PARKED honor-only",
     "outbound": "CLOSED",
@@ -106,5 +75,6 @@
     "secrets_in_pages": "FORBIDDEN",
     "live_fetch": 0
   },
-  "live_fetch": 0
+  "live_fetch": 0,
+  "accepts": []
 }

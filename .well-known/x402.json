@@ -2,7 +2,7 @@
   "x402Version": 2,
   "version": 2,
   "name": "API Grid",
-  "description": "HTTPS URL \u2192 402/compliance JSON after x402 settle. Option A Endpoint Compliance Probe (NOT-LIVE: seller_endpoint TBD; do not pay. Terms when live: 0.10 USDC Base).",
+  "description": "HTTPS URL \u2192 compliance JSON. Option A Endpoint Compliance Probe (NOT-LIVE: seller_endpoint TBD; do not pay. Terms when live: 0.10 USDC Base).",
   "commercial_claim": "NOT-LIVE",
   "seller_endpoint": "TBD",
   "seller_endpoint_note": "seller_endpoint is TBD. Prior Worker host decommissioned. No live seller URL is claimed. LIVE_FETCH=0. Cap-10 PARKED honor-only.",
@@ -13,7 +13,7 @@
     "agent_json": "https://apigrid-ch.github.io/api-grid/agent.json",
     "catalog_json": "https://apigrid-ch.github.io/api-grid/catalog.json",
     "catalog_note": "Cap-10 catalog remains PARKED honor-only; not sold via this probe discovery.",
-    "well_known_note": "Canonical discovery URL uses .json extension (GitHub Pages serves this reliably). Extensionless /.well-known/x402 remains unsupported on Pages and returns 404."
+    "well_known_note": "Canonical discovery URL uses .json extension. Extensionless /.well-known/x402 mirrors this file byte-for-byte."
   },
   "accepted_networks": [
     {
@@ -30,7 +30,7 @@
       "resource": "/v1/probe",
       "method": "POST",
       "sku": "POST /v1/probe",
-      "description": "Endpoint Compliance Probe \u2014 HTTPS URL \u2192 402/compliance JSON after x402 settle",
+      "description": "Endpoint Compliance Probe \u2014 HTTPS URL \u2192 compliance JSON (not offered while locked)",
       "mimeType": "application/json",
       "reference_when_live": {
         "status": "reference when live; inactive now; do not pay",
@@ -51,13 +51,13 @@
         "body": {
           "targetUrl": "https://\u2026"
         },
-        "unpaid": "402 + PAYMENT-REQUIRED (omit PAYMENT-SIGNATURE)",
-        "paid": "Retry with PAYMENT-SIGNATURE \u2192 200 schema rev1"
+        "unpaid": "While locked (LIVE_FETCH=0): HTTP 503 {\"error\":\"live_fetch_locked\",\"detail\":\"Service locked. No payment accepted.\"}, no PAYMENT-REQUIRED, no accepts. When unlocked: 402 + PAYMENT-REQUIRED (omit PAYMENT-SIGNATURE).",
+        "paid": "While locked: HTTP 503 {\"error\":\"live_fetch_locked\",\"detail\":\"Service locked. No payment accepted.\"}, no settle. Unlocked behaviour not offered; terms published when live."
       },
       "settle": {
         "mode": "inactive",
         "rail": "eip3009",
-        "note": "Inactive. seller_endpoint TBD; no live seller URL claimed; LIVE_FETCH=0."
+        "note": "Inactive. seller_endpoint TBD; no live seller URL claimed; LIVE_FETCH=0; locked calls return HTTP 503 {\"error\":\"live_fetch_locked\",\"detail\":\"Service locked. No payment accepted.\"} and never settle."
       },
       "accepts": [],
       "payment_required": {
